@@ -1,21 +1,218 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
+
+
+
+html {
+    scroll-behavior: smooth;
   }
-}
-
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+  }
+  
+  /* Custom focus styles */
+  .focus-ring:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+  
+  /* Gradient text effect */
+  .gradient-text {
+    background: linear-gradient(135deg, #3b82f6, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Custom button hover effects */
+  .btn-hover-effect {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-hover-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .btn-hover-effect:hover::before {
+    left: 100%;
+  }
+  
+  /* Product card animations */
+  .product-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  /* Loading animation */
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  /* Custom input styles */
+  .custom-input {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .custom-input:focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  /* Heart icon animation */
+  .heart-animation {
+    transition: all 0.3s ease;
+  }
+  
+  .heart-animation:hover {
+    transform: scale(1.2);
+  }
+  
+  .heart-animation.filled {
+    animation: heartBeat 0.6s ease-in-out;
+  }
+  
+  @keyframes heartBeat {
+    0% {
+      transform: scale(1);
+    }
+    14% {
+      transform: scale(1.3);
+    }
+    28% {
+      transform: scale(1);
+    }
+    42% {
+      transform: scale(1.3);
+    }
+    70% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Shopping cart animation */
+  .cart-animation {
+    transition: all 0.3s ease;
+  }
+  
+  .cart-animation:hover {
+    transform: scale(1.1) rotate(5deg);
+  }
+  
+  /* Navigation hover effects */
+  .nav-link {
+    position: relative;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #f59e0b;
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  /* Price tag styles */
+  .price-tag {
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+  /* Discount badge */
+  .discount-badge {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+  
+  /* Responsive typography */
+  @media (max-width: 768px) {
+    .responsive-text {
+      font-size: 0.875rem;
+    }
+  }
+  
+  /* Custom shadows */
+  .custom-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .custom-shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Glass morphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.25);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  
+  /* Text selection color */
+  ::selection {
+    background: #3b82f6;
+    color: white;
+  }
+  
+  ::-moz-selection {
+    background: #3b82f6;
+    color: white;
+  }
+  
