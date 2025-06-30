@@ -1,7 +1,10 @@
+import "./globals.css";
+import SportovaNavbar from "@/components/SportovaNavbar";
+import Footer from "@/components/Footer";
+import NewsletterSection from "@/components/NewsletterSection";
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,10 +18,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}
       >
+        <div>
+          <SportovaNavbar />
+        </div>
         {children}
+        <NewsletterSection />
+        <Footer />
       </body>
     </html>
   );
