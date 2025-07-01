@@ -4,12 +4,12 @@ import ProductCard from '@/components/ProductCard';
 import { motion } from 'framer-motion';
 
 const products = [
-    { imageUrl: '/placeholder.svg', name: 'УСК Веселый дворик', newPrice: '27 590 Р' },
-    { imageUrl: '/placeholder.svg', name: 'Спортивный детский комплекс "Юниор Плюс"', oldPrice: '18 500 Р', newPrice: '15 990 Р' },
-    { imageUrl: '/placeholder.svg', name: 'Детский уличный спортивный комплекс «Юнга»', oldPrice: '23 800 Р', newPrice: '19 490 Р' },
-    { imageUrl: '/placeholder.svg', name: 'Уличный спортивный турник Романа', newPrice: '22 990 Р' },
-    { imageUrl: '/placeholder.svg', name: 'Комплекс "Workout"', newPrice: '35 000 Р' },
-    { imageUrl: '/placeholder.svg', name: 'Комплекс "Силач"', newPrice: '29 990 Р' },
+    { imageUrl: '/carousel2/1.png', name: 'УСК Веселый дворик', newPrice: '27 590 Р' },
+    { imageUrl: '/carousel2/2.png', name: 'Спортивный детский комплекс "Юниор Плюс"', oldPrice: '18 500 Р', newPrice: '15 990 Р' },
+    { imageUrl: '/carousel2/3.png', name: 'Детский уличный спортивный комплекс «Юнга»', oldPrice: '23 800 Р', newPrice: '19 490 Р' },
+    { imageUrl: '/carousel2/4.png', name: 'Уличный спортивный турник Романа', newPrice: '22 990 Р' },
+    { imageUrl: '/carousel2/2.png', name: 'Комплекс "Workout"', newPrice: '35 000 Р' },
+    { imageUrl: '/carousel2/1.png', name: 'Комплекс "Силач"', newPrice: '29 990 Р' },
 ];
 
 const OutdoorComplexesPage = () => {

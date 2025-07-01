@@ -3,11 +3,15 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown, Search, Heart, BarChart3, ShoppingCart, Phone, User, MapPin, Menu, X } from 'lucide-react';
+import { useProductContext } from './ProductContext';
+import Image from 'next/image';
 
 const SportovaNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCatalog, setSelectedCatalog] = useState(null);
+  const { favorites, compare, cart } = useProductContext();
 
   const toggleDropdown = (dropdown: string) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
@@ -15,6 +19,17 @@ const SportovaNavbar = () => {
 
   const catalogItems = [
     'Футбол', 'Баскетбол', 'Теннис', 'Плавание', 'Бег', 'Фитнес', 'Волейбол', 'Хоккей'
+  ];
+
+  const catalogLinks = [
+    { name: 'Футбол', href: '/catalog/football' },
+    { name: 'Баскетбол', href: '/catalog/basketball' },
+    { name: 'Теннис', href: '/catalog/tennis' },
+    { name: 'Плавание', href: '/catalog/swimming' },
+    { name: 'Бег', href: '/catalog/running' },
+    { name: 'Фитнес', href: '/catalog/fitness' },
+    { name: 'Волейбол', href: '/catalog/volleyball' },
+    { name: 'Хоккей', href: '/catalog/hockey' },
   ];
 
   return (
@@ -86,21 +101,34 @@ const SportovaNavbar = () => {
 
           {/* Right Icons */}
           <div className="hidden md:flex items-center space-x-3 sm:space-x-6">
-            <button className="text-gray-600 hover:text-red-500 transition-colors" title="Избранное">
+            <Link href="/favorites" className="relative text-gray-600 hover:text-red-500 transition-colors" title="Избранное">
               <Heart className="w-5 h-5 sm:w-7 sm:h-7" />
-            </button>
-            
-            <button className="text-gray-600 hover:text-red-500 transition-colors" title="Сравнение">
+              {favorites.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center animate-pulse">
+                  {favorites.length}
+                </span>
+              )}
+            </Link>
+            <Link href="/compare" className="relative text-gray-600 hover:text-red-500 transition-colors" title="Сравнение">
               <BarChart3 className="w-5 h-5 sm:w-7 sm:h-7" />
-            </button>
-            
-            <button className="flex items-center text-left text-xs sm:text-sm text-gray-600 hover:text-red-500 transition-colors">
+              {compare.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center animate-pulse">
+                  {compare.length}
+                </span>
+              )}
+            </Link>
+            <Link href="/cart" className="relative flex items-center text-left text-xs sm:text-sm text-gray-600 hover:text-red-500 transition-colors">
               <ShoppingCart className="w-5 h-5 sm:w-7 sm:h-7 mr-1 sm:mr-2" />
+              {cart.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center animate-pulse">
+                  {cart.length}
+                </span>
+              )}
               <div>
-                <div className="font-medium">Корзина (0)</div>
-                <div className="text-[10px] sm:text-xs text-gray-500">Нет товаров</div>
+                <div className="font-medium">Корзина ({cart.length})</div>
+                <div className="text-[10px] sm:text-xs text-gray-500">{cart.length === 0 ? 'Нет товаров' : `Товаров: ${cart.length}`}</div>
               </div>
-            </button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -132,19 +160,75 @@ const SportovaNavbar = () => {
                 </button>
                 
                 {activeDropdown === 'catalog' && (
-                  <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-lg z-50">
-                    <div className="py-2">
-                      {catalogItems.map((item, index) => (
-                        <a
-                          key={index}
-                          href="#"
-                          className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition-colors"
+                  <>
+                    {/* Затемнение фона с анимацией */}
+                    <div
+                      className="fixed inset-0 bg-black bg-opacity-40 z-40 transition-opacity duration-300 animate-fadein"
+                      onClick={() => { setActiveDropdown(null); setSelectedCatalog(null); }}
+                      aria-label="Закрыть модальное окно"
+                      style={{animation: 'fadein 0.3s'}}
+                    />
+                    {/* Drawer справа с анимацией */}
+                    <div className="fixed inset-y-0 right-0 z-50 flex items-stretch">
+                      <div
+                        className="bg-white shadow-2xl w-[90vw] max-w-md h-full p-6 sm:p-10 relative flex flex-col transition-all duration-300 animate-drawer"
+                        style={{animation: 'drawer 0.35s'}}
+                      >
+                        <button
+                          onClick={() => { setActiveDropdown(null); setSelectedCatalog(null); }}
+                          aria-label="Закрыть меню"
+                          className="absolute top-6 right-8 sm:top-8 sm:right-12"
                         >
-                          {item}
-                        </a>
-                      ))}
+                          <X className="w-8 h-8 text-gray-400 hover:text-red-500 transition-colors" />
+                        </button>
+                        {!selectedCatalog ? (
+                          <div className="flex flex-col gap-5 mt-2 w-full">
+                            {catalogLinks.map((item, index) => (
+                              <div
+                                key={index}
+                                className="text-gray-800 hover:text-blue-600 text-2xl sm:text-3xl transition-colors cursor-pointer px-2 py-3 rounded hover:bg-gray-100 font-medium"
+                                onClick={() => setSelectedCatalog(item)}
+                              >
+                                {item.name}
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="mt-6 w-full flex flex-col items-start">
+                            <button
+                              onClick={() => setSelectedCatalog(null)}
+                              className="mb-8 flex items-center text-blue-600 hover:underline text-lg sm:text-xl"
+                            >
+                              <span className="mr-2 text-2xl">&larr;</span> Назад к списку
+                            </button>
+                            <div className="w-full flex justify-center mb-6">
+                              <Image
+                                src={`/спорты/${selectedCatalog.name.toLowerCase()}.png`}
+                                alt={selectedCatalog.name}
+                                width={180}
+                                height={180}
+                                style={{objectFit: 'contain', background: '#f5f5f5', borderRadius: 16}}
+                                onError={(e) => { e.target.style.display = 'none'; }}
+                              />
+                            </div>
+                            <div className="text-3xl font-bold mb-4">{selectedCatalog.name}</div>
+                            <div className="text-gray-600 text-xl">Раздел "{selectedCatalog.name}" находится в разработке. Скоро здесь появятся товары и полезная информация!</div>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                    {/* Анимации через Tailwind + кастомные keyframes */}
+                    <style jsx global>{`
+                      @keyframes fadein {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                      }
+                      @keyframes drawer {
+                        from { opacity: 0; transform: translateX(100%); }
+                        to { opacity: 1; transform: translateX(0); }
+                      }
+                    `}</style>
+                  </>
                 )}
               </div>
 
@@ -154,19 +238,19 @@ const SportovaNavbar = () => {
               <Link href="/outdoor-complexes" className="px-4 py-2 hover:bg-blue-700 rounded transition-colors">
                 Уличные комплексы
               </Link>
-              <a href="#" className="px-4 py-2 hover:bg-blue-700 rounded transition-colors">
+              <Link href="/turniki" className="px-4 py-2 hover:bg-blue-700 rounded transition-colors">
                 Турники
-              </a>
-              <a href="#" className="px-4 py-2 hover:bg-blue-700 rounded transition-colors">
+              </Link>
+              <Link href="/tyazhelaya-atletika" className="px-4 py-2 hover:bg-blue-700 rounded transition-colors">
                 Тяжелая атлетика
-              </a>
+              </Link>
             </div>
             
             <div className="flex items-center">
-              <a href="#" className="flex items-center space-x-1 px-4 py-2 bg-orange-500 rounded hover:bg-orange-600 transition-colors">
+              <Link href="/discounts" className="flex items-center space-x-1 px-4 py-2 bg-orange-500 rounded hover:bg-orange-600 transition-colors">
                 <span className="text-sm">%</span>
                 <span>Товары со скидкой</span>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -203,13 +287,15 @@ const SportovaNavbar = () => {
               
               {activeDropdown === 'mobileCatalog' && (
                 <div className="pl-4 space-y-1">
-                  {catalogItems.map((item, index) => (
+                  {catalogLinks.map((item, index) => (
                     <a
                       key={index}
-                      href="#"
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="block px-4 py-2 text-blue-200 hover:text-white transition-colors"
                     >
-                      {item}
+                      {item.name}
                     </a>
                   ))}
                 </div>
@@ -221,12 +307,12 @@ const SportovaNavbar = () => {
               <Link href="/outdoor-complexes" className="block px-4 py-2 hover:bg-blue-700 rounded transition-colors">
                 Уличные комплексы
               </Link>
-              <a href="#" className="block px-4 py-2 hover:bg-blue-700 rounded transition-colors">
+              <Link href="/turniki" className="block px-4 py-2 hover:bg-blue-700 rounded transition-colors">
                 Турники
-              </a>
-              <a href="#" className="block px-4 py-2 hover:bg-blue-700 rounded transition-colors">
+              </Link>
+              <Link href="/tyazhelaya-atletika" className="block px-4 py-2 hover:bg-blue-700 rounded transition-colors">
                 Тяжелая атлетика
-              </a>
+              </Link>
               <div className="px-4 py-2 bg-orange-500 rounded mx-4">
                 <span>% Товары со скидкой</span>
               </div>

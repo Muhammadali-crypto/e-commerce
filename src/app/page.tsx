@@ -12,6 +12,10 @@ const swedishWallsProducts = [
   { imageUrl: '/carousel2/2.png', name: 'Спортивный детский комплекс "Юниор-Плюс"...', oldPrice: '18 500 ₽', newPrice: '15 990 ₽' },
   { imageUrl: '/carousel2/3.png', name: 'Детский уличный спортивный комплекс «Юниор» (с сеткой)...', oldPrice: '23 800 ₽', newPrice: '19 490 ₽' },
   { imageUrl: '/carousel2/4.png', name: 'Уличный спортивный турник Романа', newPrice: '22 990 ₽' },
+  { imageUrl: '/carousel2/1.png', name: 'Комплекс "Силач"', newPrice: '25 000 ₽' },
+  { imageUrl: '/carousel2/2.png', name: 'Комплекс "Геркулес"', newPrice: '28 000 ₽' },
+  { imageUrl: '/carousel2/3.png', name: 'Комплекс "Атлет"', newPrice: '21 500 ₽' },
+  { imageUrl: '/carousel2/4.png', name: 'Комплекс "Профи"', newPrice: '29 990 ₽' },
 ];
 
 const outdoorComplexesProducts = [
@@ -19,6 +23,10 @@ const outdoorComplexesProducts = [
     { imageUrl: '/carousel3/2.png', name: 'Гантель разборная (гриф + блины) 24,1 кг', oldPrice: '6 200 ₽', newPrice: '4 260 ₽' },
     { imageUrl: '/carousel3/3.png', name: 'Гантель разборная (гриф + блины) 26,6 кг', oldPrice: '5 500 ₽', newPrice: '4 260 ₽' },
     { imageUrl: '/carousel3/4.png', name: 'Гиря «Горилла» 16,0 кг', newPrice: '5 990 ₽' },
+    { imageUrl: '/carousel3/1.png', name: 'Гантель разборная 10 кг', newPrice: '1 500 ₽' },
+    { imageUrl: '/carousel3/2.png', name: 'Гантель разборная 20 кг', newPrice: '2 500 ₽' },
+    { imageUrl: '/carousel3/3.png', name: 'Гантель разборная 30 кг', newPrice: '3 500 ₽' },
+    { imageUrl: '/carousel3/4.png', name: 'Гиря 24 кг', newPrice: '7 990 ₽' },
 ];
 
 const carousel1Products = [
@@ -26,6 +34,10 @@ const carousel1Products = [
   { imageUrl: '/carousel1/2.png', name: 'Шведская стенка P-3 (Цвет: Антик Серебро)', oldPrice: '11 320 ₽', newPrice: '7 990 ₽' },
   { imageUrl: '/carousel1/3.png', name: 'Шведская стенка P-4 (Цвет: Светофор)', oldPrice: '14 990 ₽', newPrice: '10 990 ₽' },
   { imageUrl: '/carousel1/4.png', name: 'Шведская стенка P-19 (Цвет: Антик серебро)', newPrice: '14 980 ₽' },
+  { imageUrl: '/carousel1/1.png', name: 'Шведская стенка P-5 (Цвет: Юниор)', newPrice: '8 990 ₽' },
+  { imageUrl: '/carousel1/2.png', name: 'Шведская стенка P-6 (Цвет: Светофор2)', newPrice: '9 990 ₽' },
+  { imageUrl: '/carousel1/3.png', name: 'Шведская стенка P-7 (Цвет: Черный)', newPrice: '12 990 ₽' },
+  { imageUrl: '/carousel1/4.png', name: 'Шведская стенка P-8 (Цвет: Красный)', newPrice: '13 990 ₽' },
 ];
 
 export default function Page() {

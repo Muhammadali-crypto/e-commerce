@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import Link from "next/link";
 
 export default function NewNavbar() {
+  const [openModal, setOpenModal] = useState<string | null>(null);
+
+  const handleOpenModal = (modal: string) => setOpenModal(modal);
+  const handleCloseModal = () => setOpenModal(null);
+
+  // Модальное окно
+  const Modal = ({ children }: { children: React.ReactNode }) => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+      <div className="bg-white rounded-lg shadow-lg p-8 min-w-[320px] max-w-[90vw] relative">
+        <button onClick={handleCloseModal} className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-xl">×</button>
+        {children}
+      </div>
+    </div>
+  );
+
   return (
     <nav className="w-full">
       {/* Top gray bar */}
@@ -56,27 +72,30 @@ export default function NewNavbar() {
           <button className="flex items-center px-4 py-2 bg-blue-800 rounded-l hover:bg-blue-900">
             <span className="mr-2">▮</span> Каталог товаров <span className="ml-1">▼</span>
           </button>
-          {/* Здесь можно добавить выпадающее меню */}
         </div>
-        {/* Шведские стенки с выпадающим меню */}
-        <div className="relative group">
-          <a href="#" className="px-4 py-2 hover:bg-blue-800 block">Шведские стенки</a>
-          <div className="absolute left-0 top-full mt-1 hidden group-hover:flex bg-white shadow-lg rounded p-4 gap-4 min-w-[320px] z-30">
-            {[1,2,3,4].map(num => (
-              <img
-                key={num}
-                src={`/carousel1/${num}.png`}
-                alt={`Шведская стенка ${num}`}
-                className="w-20 h-20 object-contain rounded border hover:scale-105 transition-transform"
-              />
-            ))}
-          </div>
-        </div>
-        <a href="#" className="px-4 py-2 hover:bg-blue-800">Уличные комплексы</a>
-        <a href="#" className="px-4 py-2 hover:bg-blue-800">Турники</a>
-        <a href="#" className="px-4 py-2 hover:bg-blue-800">Тяжелая атлетика</a>
-        <a href="#" className="px-4 py-2 text-yellow-300 hover:bg-blue-800 ml-auto">% Товары со скидкой</a>
+        <Link href="/swedish-walls" className="px-4 py-2 hover:bg-blue-800 block">Шведские стенки</Link>
+        <Link href="/outdoor-complexes" className="px-4 py-2 hover:bg-blue-800 block">Уличные комплексы</Link>
+        <Link href="/pull-up-bars" className="px-4 py-2 hover:bg-blue-800 block">Турники</Link>
+        <Link href="/weightlifting" className="px-4 py-2 hover:bg-blue-800 block">Тяжелая атлетика</Link>
+        <Link href="/discounts" className="px-4 py-2 bg-orange-500 text-white rounded ml-auto hover:bg-orange-600 transition-colors">% Товары со скидкой</Link>
       </div>
+
+      {/* Модальные окна */}
+      {openModal === 'swedish-walls' && (
+        <Modal> <h2 className="text-lg font-bold mb-2">Шведские стенки</h2> <p>Здесь будет информация о шведских стенках или нужный функционал.</p> </Modal>
+      )}
+      {openModal === 'outdoor-complexes' && (
+        <Modal> <h2 className="text-lg font-bold mb-2">Уличные комплексы</h2> <p>Здесь будет информация об уличных комплексах или нужный функционал.</p> </Modal>
+      )}
+      {openModal === 'pull-up-bars' && (
+        <Modal> <h2 className="text-lg font-bold mb-2">Турники</h2> <p>Здесь будет информация о турниках или нужный функционал.</p> </Modal>
+      )}
+      {openModal === 'weightlifting' && (
+        <Modal> <h2 className="text-lg font-bold mb-2">Тяжелая атлетика</h2> <p>Здесь будет информация о тяжелой атлетике или нужный функционал.</p> </Modal>
+      )}
+      {openModal === 'discounts' && (
+        <Modal> <h2 className="text-lg font-bold mb-2">% Товары со скидкой</h2> <p>Здесь будет информация о скидках или нужный функционал.</p> </Modal>
+      )}
     </nav>
   );
 } 

@@ -5,6 +5,7 @@ import NewsletterSection from "@/components/NewsletterSection";
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { ProductProvider } from '@/components/ProductContext';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,12 +25,14 @@ export default function RootLayout({
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}
       >
-        <div>
-          <SportovaNavbar />
-        </div>
-        {children}
-        <NewsletterSection />
-        <Footer />
+        <ProductProvider>
+          <div>
+            <SportovaNavbar />
+          </div>
+          {children}
+          <NewsletterSection />
+          <Footer />
+        </ProductProvider>
       </body>
     </html>
   );
