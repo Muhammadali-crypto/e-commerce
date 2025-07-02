@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, name, oldPrice, new
     <div className="group bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:border-blue-300">
       <div className="relative p-4">
         <Image src={displayImage} alt={name} width={300} height={300} className="w-full h-60 object-contain transition-transform duration-300 group-hover:scale-105" />
-        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute top-3 right-3 flex flex-col gap-2 transition-opacity duration-300">
           <button
             className={`bg-white p-2 rounded-full shadow transition-colors ${isFavorite ? 'text-red-500' : 'text-gray-500 hover:text-red-500'}`}
             aria-label="Добавить в избранное"

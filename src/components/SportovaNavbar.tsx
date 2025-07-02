@@ -6,11 +6,18 @@ import { ChevronDown, Search, Heart, BarChart3, ShoppingCart, Phone, User, MapPi
 import { useProductContext } from './ProductContext';
 import Image from 'next/image';
 
+// Тип для элемента каталога
+type CatalogLink = {
+  name: string;
+  href: string;
+  image: string;
+};
+
 const SportovaNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCatalog, setSelectedCatalog] = useState(null);
+  const [selectedCatalog, setSelectedCatalog] = useState<CatalogLink | null>(null);
   const { favorites, compare, cart } = useProductContext();
 
   const toggleDropdown = (dropdown: string) => {
@@ -22,14 +29,14 @@ const SportovaNavbar = () => {
   ];
 
   const catalogLinks = [
-    { name: 'Футбол', href: '/catalog/football' },
-    { name: 'Баскетбол', href: '/catalog/basketball' },
-    { name: 'Теннис', href: '/catalog/tennis' },
-    { name: 'Плавание', href: '/catalog/swimming' },
-    { name: 'Бег', href: '/catalog/running' },
-    { name: 'Фитнес', href: '/catalog/fitness' },
-    { name: 'Волейбол', href: '/catalog/volleyball' },
-    { name: 'Хоккей', href: '/catalog/hockey' },
+    { name: 'Футбол', href: '/catalog/football', image: '/спорты/футбол.png' },
+    { name: 'Баскетбол', href: '/catalog/basketball', image: '/спорты/баскетбол.png' },
+    { name: 'Теннис', href: '/catalog/tennis', image: '/спорты/теннис.png' },
+    { name: 'Плавание', href: '/catalog/swimming', image: '/спорты/плавание.png' },
+    { name: 'Бег', href: '/catalog/running', image: '/спорты/бег.png' },
+    { name: 'Фитнес', href: '/catalog/fitness', image: '/спорты/фитнес.png' },
+    { name: 'Волейбол', href: '/catalog/volleyball', image: '/спорты/волейбол.png' },
+    { name: 'Хоккей', href: '/catalog/hockey', image: '/спорты/хоккей.png' },
   ];
 
   return (
@@ -202,14 +209,15 @@ const SportovaNavbar = () => {
                               <span className="mr-2 text-2xl">&larr;</span> Назад к списку
                             </button>
                             <div className="w-full flex justify-center mb-6">
-                              <Image
-                                src={`/спорты/${selectedCatalog.name.toLowerCase()}.png`}
-                                alt={selectedCatalog.name}
-                                width={180}
-                                height={180}
-                                style={{objectFit: 'contain', background: '#f5f5f5', borderRadius: 16}}
-                                onError={(e) => { e.target.style.display = 'none'; }}
-                              />
+                              {selectedCatalog && selectedCatalog.image && (
+                                <Image
+                                  src={selectedCatalog.image}
+                                  alt={selectedCatalog.name || 'Категория'}
+                                  width={180}
+                                  height={180}
+                                  style={{objectFit: 'contain', background: '#f5f5f5', borderRadius: 16}}
+                                />
+                              )}
                             </div>
                             <div className="text-3xl font-bold mb-4">{selectedCatalog.name}</div>
                             <div className="text-gray-600 text-xl">Раздел "{selectedCatalog.name}" находится в разработке. Скоро здесь появятся товары и полезная информация!</div>

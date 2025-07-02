@@ -4,13 +4,27 @@ import React, { useState } from 'react';
 
 const NewsletterSection = () => {
   const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Тут будет логика подписки
-    console.log('Подписка на email:', email);
-    alert(`Вы подписались на рассылку: ${email}`);
-    setEmail('');
+    setStatus('idle');
+    setMessage('');
+    const res = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      setStatus('success');
+      setMessage('SMS успешно отправлен на ваш e-mail!');
+      setEmail('');
+    } else {
+      setStatus('error');
+      setMessage(data.message || 'E-mail не существует');
+    }
   };
 
   return (
@@ -45,6 +59,11 @@ const NewsletterSection = () => {
           </div>
         </div>
       </div>
+      {status !== 'idle' && (
+        <div className={`mt-4 text-center text-lg font-semibold ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+          {message}
+        </div>
+      )}
     </div>
   );
 };
