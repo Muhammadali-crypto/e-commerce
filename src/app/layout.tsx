@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { ProductProvider } from '@/components/ProductContext';
+import TalkToMeChat from '@/components/TalkToMeChat';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -32,6 +33,7 @@ export default function RootLayout({
           {children}
           <NewsletterSection />
           <Footer />
+          <TalkToMeChat />
         </ProductProvider>
       </body>
     </html>
