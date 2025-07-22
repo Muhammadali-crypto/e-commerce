@@ -6,7 +6,6 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { ProductProvider } from '@/components/ProductContext';
-import TalkToMeChat from '@/components/TalkToMeChat';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,6 +21,23 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.$crisp=[];
+              window.CRISP_WEBSITE_ID="ebb2d2cc-bc27-4ac0-af9e-4ebd3623ae22";
+              (function(){
+                d=document;
+                s=d.createElement("script");
+                s.src="https://client.crisp.chat/l.js";
+                s.async=1;
+                d.getElementsByTagName("head")[0].appendChild(s);
+              })();
+            `,
+          }}
+        />
       </head>
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}
@@ -33,7 +49,6 @@ export default function RootLayout({
           {children}
           <NewsletterSection />
           <Footer />
-          <TalkToMeChat />
         </ProductProvider>
       </body>
     </html>

@@ -1,19 +1,16 @@
-// import emailjs from '@emailjs/browser';
+import emailjs from "emailjs-com";
 
-// const templateParams = {
-//   name: 'James',
-//   notes: 'Check this out!',
-// };
+const templateParams = {
+  user_email: 'muhammadalimuhammadali2012@gmail.com', // или email из формы
+};
 
-// emailjs
-//   .send('service_muxa_12', 'YOUR_TEMPLATE_ID', templateParams, {
-//     publicKey: 'GCRjfoeOkDzajEqVc',
-//   })
-//   .then(
-//     (response) => {
-//       console.log('SUCCESS!', response.status, response.text);
-//     },
-//     (err) => {
-//       console.log('FAILED...', err);
-//     },
-//   ); 
+emailjs
+  .send('service_muxa_21', 'template_wlv20ot', templateParams, 'GCRjfoeOkDzajEqVc')
+  .then(
+    (response) => {
+      console.log('SUCCESS!', response.status, response.text);
+    },
+    (err) => {
+      console.log('FAILED...', err);
+    },
+  );

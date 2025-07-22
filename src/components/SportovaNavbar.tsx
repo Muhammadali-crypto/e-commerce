@@ -48,7 +48,7 @@ const SportovaNavbar = () => {
             <div className="flex items-center space-x-2 sm:space-x-6">
               <div className="flex items-center text-blue-600">
                 <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                <span>Нижний Новгород</span>
+                <span>г. Самарканд</span>
               </div>
               <div className="hidden md:flex space-x-2 sm:space-x-4 text-gray-600">
                 <Link href="/promotions" className="hover:text-red-500 transition-colors">Акции</Link>
@@ -62,11 +62,27 @@ const SportovaNavbar = () => {
             <div className="flex items-center space-x-2 sm:space-x-4">
               <div className="flex items-center text-gray-700">
                 <Phone className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                <span className="font-semibold text-xs sm:text-sm">8800 550-22-16</span>
+                <span className="font-semibold text-xs sm:text-sm">+998-(91)-524-07-55</span>
               </div>
               <button className="text-blue-600 hover:text-blue-800 transition-colors text-xs sm:text-sm">
                 Заказать звонок
               </button>
+              {/* Кнопки Войти и Зарегистрироваться */}
+              <div className="flex gap-2">
+                <Link
+                  href="/register"
+                  className="px-4 py-1.5 rounded bg-blue-50 text-blue-600 font-medium text-sm shadow-sm hover:bg-blue-100 transition-all duration-300"
+                  style={{ boxShadow: "0 2px 8px 0 #e0f0ff" }}
+                >
+                  Создать аккаунт
+                </Link>
+                <Link
+                  href="/login"
+                  className="px-4 py-1.5 rounded bg-orange-500 text-white font-medium text-sm hover:bg-orange-600 transition-all duration-300"
+                >
+                  Войти 
+                </Link>
+              </div>
             </div>
           </div>
         </div>

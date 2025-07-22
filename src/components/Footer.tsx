@@ -17,9 +17,9 @@ const Footer = () => {
           {/* Контакты */}
           <div>
             <h3 className="text-lg font-light mb-6">Контакты</h3>
-            <p className="mb-2 text-[#FFD600]">г. Нижний Новгород,<br/>ул.Народная, 20</p>
-            <p className="mb-2">8 (800) 550-22-16</p>
-            <p className="mb-2">info@sportova.ru</p>
+            <p className="mb-2 text-[#FFD600]">г. Самарканд,<br/>ул.Саттеппо, 158, 26</p>
+            <p className="mb-2">+998-(91)-524-07-55</p>
+            <p className="mb-2">muhammadalimuhammadali2012@gmail.com</p>
             <p className="mb-2">Sportova на связи:</p>
             <div className="flex gap-3 mt-2">
               <a href="#" aria-label="VK"><FaVk className="w-7 h-7 text-[#2787F5] hover:opacity-80" /></a>
