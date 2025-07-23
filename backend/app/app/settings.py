@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'app',
-    'blog',
-    'corsheaders',
     'users',
+    # 'blog',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +56,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'app.urls'
+AUTH_USER_MODEL = 'users.User'
 
 TEMPLATES = [
     {
