@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import useEmblaCarousel from 'embla-carousel-react';
+import useEmblaCarousel from 'embla-carousel-react';      
 import { useProductContext } from './ProductContext';
 
 interface Product {
