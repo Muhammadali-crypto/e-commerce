@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from '../../../contexts/AuthContext';
 
 function EyeIcon({ open }) {
   return open ? (
@@ -26,6 +27,7 @@ export default function RegisterPage() {
   const [submitted, setSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { signUp } = useAuth();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -54,12 +56,16 @@ export default function RegisterPage() {
   const errors = validate();
   const isValid = Object.values(errors).every((v) => v === false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
     if (isValid) {
-      // Здесь обработка отправки формы
-      alert("Регистрация успешна!");
+      try {
+        await signUp(form.email, form.password, form.username || form.firstName || undefined);
+        alert("Регистрация успешна! Проверьте почту для подтверждения.");
+      } catch (err) {
+        alert("Ошибка регистрации: " + (err?.message || "Попробуйте снова"));
+      }
     }
   };
 

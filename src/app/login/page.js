@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from '../../../contexts/AuthContext';
 
 function EyeIcon({ open }) {
   return open ? (
@@ -19,6 +20,7 @@ export default function LoginPage() {
     remember: false,
   });
   const [showPassword, setShowPassword] = useState(false);
+  const { signIn } = useAuth();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -31,24 +33,11 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://127.0.0.1:8000/auth/jwt/create/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: form.email,
-          password: form.password,
-        }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        localStorage.setItem("access_token", data.access);
-        alert("Вход выполнен!");
-        // window.location.href = "/"; // редирект на главную при необходимости
-      } else {
-        alert("Ошибка входа: проверьте email и пароль");
-      }
+      await signIn(form.email, form.password);
+      alert("Вход выполнен!");
+      // window.location.href = "/"; // редирект на главную при необходимости
     } catch (err) {
-      alert("Ошибка сети или сервера");
+      alert("Ошибка входа: " + (err?.message || "проверьте email и пароль"));
     }
   };
 
