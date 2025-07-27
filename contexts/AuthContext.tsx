@@ -1,6 +1,9 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { createContext } from 'react'
+import { useContext, useEffect, useState, ReactNode } from 'react'
+// import { updateProfile } from 'firebase/auth'
+// import { User } from 'firebase/auth'
 import {
   User,
   onAuthStateChanged,
@@ -15,6 +18,23 @@ import {
 } from 'firebase/auth'
 import { auth } from '../lib/firebase'
 
+
+type AuthContextType = {
+  sendVerificationEmail: () => Promise<void>
+}
+
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
+
+export function useAuth() {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider')
+  }
+  return context
+}
+
+
 interface Type {
   user: User | null
   loading: boolean
@@ -25,16 +45,6 @@ interface Type {
   resetPassword: (email: string) => Promise<void>
   updateUserProfile: (displayName: string, photoURL?: string) => Promise<void>
   sendVerificationEmail: () => Promise<void>
-}
-
-const  = createContext<Type | undefined>(undefined)
-
-export function useAuth() {
-  const context = useContext()
-  if (context === undefined) {
-    throw new Error('useAuth должен использоваться внутри AuthProvider')
-  }
-  return context
 }
 
 interface AuthProviderProps {
@@ -98,12 +108,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
     await sendPasswordResetEmail(auth, email)
   }
 
-  const updateUserProfile = async (displayName: string, photoURL?: string) => {
-    if (user) {
-      await updateProfile(user, { displayName, photoURL })
-      setUser({ ...user, displayName, photoURL })
+ const updateUserProfile = async (
+  displayName: string,
+  photoURL?: string | null
+) => {
+  if (user) {
+    try {
+      await updateProfile(user, {
+        displayName,
+        photoURL: photoURL ?? null, // здесь важно!
+      })
+
+      setUser({
+        ...user,
+        displayName,
+        photoURL: photoURL ?? null,
+      })
+    } catch (error) {
+      console.error("Ошибка при обновлении профиля:", error)
     }
   }
+}
 
   const sendVerificationEmail = async () => {
     if (user) {
@@ -123,5 +148,5 @@ export function AuthProvider({ children }: AuthProviderProps) {
     sendVerificationEmail,
   }
 
-  return <.Provider value={value}>{children}</.Provider>
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 } 
