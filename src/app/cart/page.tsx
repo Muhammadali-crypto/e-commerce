@@ -33,7 +33,7 @@ export default function CartPage() {
                 className="absolute top-2 right-2 bg-red-500 text-white rounded-full px-3 py-1 text-xs hover:bg-red-600 transition"
                 onClick={() => removeFromCart(product)}
               >
-                Удалить
+                Удалить❌
               </button>
             </div>
           ))}

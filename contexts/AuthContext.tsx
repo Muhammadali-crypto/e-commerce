@@ -1,9 +1,7 @@
 'use client'
 
 import { createContext } from 'react'
-import { useContext, useEffect, useState, ReactNode } from 'react'
-// import { updateProfile } from 'firebase/auth'
-// import { User } from 'firebase/auth'
+import { useEffect, useState, ReactNode } from 'react'
 import {
   User,
   onAuthStateChanged,
@@ -25,14 +23,6 @@ type AuthContextType = {
 
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
-
-export function useAuth() {
-  const context = useContext(AuthContext)
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider')
-  }
-  return context
-}
 
 
 interface Type {

@@ -4,16 +4,16 @@ import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCV_wJZRDAuGt-OPquMKomSZsUamKFX15A",
-  authDomain: "sportova-mira.firebaseapp.com",
-  projectId: "sportova-mira",
-  storageBucket: "sportova-mira.appspot.com",
-  messagingSenderId: "602640778614",
-  appId: "1:602640778614:web:8c5b0d3f2e4a6b7c9d8e1a"
+  apiKey: "AIzaSyD8aXwqc1O3RTsoQm3HoiYcIJn82EwPlRk",
+  authDomain: "sportova-ali.firebaseapp.com",
+  projectId: "sportova-ali",
+  storageBucket: "sportova-ali.firebasestorage.app",
+  messagingSenderId: "723393516848",
+  appId: "1:723393516848:web:2b95fa7b3ea48bc3c6e4f5"
 }
 
 // Чтобы не было повторной инициализации
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0]
 
 export const auth = getAuth(app)
-export const db = getFirestore(app)
+export const db = getFirestore(app) 

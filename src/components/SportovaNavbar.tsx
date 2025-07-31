@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { ChevronDown, Search, Heart, BarChart3, ShoppingCart, Phone, User, MapPin, Menu, X } from 'lucide-react';
 import { useProductContext } from './ProductContext';
 import Image from 'next/image';
+import './Login' 
+import './SignUp';
+
 
 // Тип для элемента каталога
 type CatalogLink = {
