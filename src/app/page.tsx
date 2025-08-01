@@ -7,6 +7,7 @@ import AboutSection from "@/components/AboutSection";
 import DeliveryPaymentInfo from "@/components/DeliveryPaymentInfo";
 import { motion } from "framer-motion";
 
+
 const swedishWallsProducts = [
   { imageUrl: '/carousel2/1.png', name: 'УСК Богатырь Romana, качели гнездо Romana', newPrice: '27 590 ₽', label: 'R', labelColor: '#fde047' },
   { imageUrl: '/carousel2/2.png', name: 'Спортивный детский комплекс "Юниор-Плюс"...', oldPrice: '18 500 ₽', newPrice: '15 990 ₽' },
