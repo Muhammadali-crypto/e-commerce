@@ -1,25 +1,41 @@
-// src/pages/api/products.js
+import { useEffect, useState } from 'react';
 
-let products = []; // временное хранилище в памяти
+function Products() {
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
 
-export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    const { title, description, price } = req.body;
+  useEffect(() => {
+    fetch('http://localhost:8000/api/products/')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Ошибка при загрузке данных');
+        }
+        return res.json();
+      })
+      .then((data) => setProducts(data))
+      .catch((err) => setError(err.message));
+  }, []);
 
-    if (!title || !description || !price) {
-      return res.status(400).json({ message: 'Missing required fields' });
-    }
-
-    const newProduct = { title, description, price };
-    products.push(newProduct);
-
-    console.log('Product received:', newProduct);
-    return res.status(200).json({ message: 'Product created successfully' });
-
-  } else if (req.method === 'GET') {
-    return res.status(200).json(products);
-  } else {
-    res.setHeader('Allow', ['POST', 'GET']);
-    return res.status(405).end(`Method ${req.method} Not Allowed`);
+  if (error) {
+    return <p>Ошибка: {error}</p>;
   }
+
+  return (
+    <div>
+      <h2>Список продуктов</h2>
+      {products.length === 0 ? (
+        <p>Нет продуктов</p>
+      ) : (
+        <ul>
+          {products.map((product) => (
+            <li key={product.id}>
+              {product.name} — {product.price} сум
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
+
+export default Products;
