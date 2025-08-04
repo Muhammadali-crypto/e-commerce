@@ -60,6 +60,7 @@ const SportovaNavbar = () => {
                 <Link href="/delivery-and-payment" className="hover:text-red-500 transition-colors">Доставка и Оплата</Link>
                 <Link href="/guarantees" className="hover:text-red-500 transition-colors">Гарантии</Link>
                 <Link href="/contacts" className="hover:text-red-500 transition-colors">Контакты</Link>
+                {/* <Link href="/products" className="hover:text-red-500 transition-colors">Продукты</Link> */}
               </div>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">

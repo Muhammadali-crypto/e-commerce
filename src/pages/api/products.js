@@ -12,7 +12,10 @@ function Products() {
         }
         return res.json();
       })
-      .then((data) => setProducts(data))
+      .then((data) => {
+        console.log('Полученные продукты:', data); // проверка
+        setProducts(data);
+      })
       .catch((err) => setError(err.message));
   }, []);
 
@@ -29,7 +32,7 @@ function Products() {
         <ul>
           {products.map((product) => (
             <li key={product.id}>
-              {product.name} — {product.price} сум
+              <strong>{product.name || 'Без названия'}</strong> — {product.price} сум
             </li>
           ))}
         </ul>
