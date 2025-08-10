@@ -22,7 +22,8 @@ type AuthContextType = {
 }
 
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+export type { Type };
+export const AuthContext = createContext<Type | undefined>(undefined);
 
 
 interface Type {

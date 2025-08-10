@@ -20,11 +20,22 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, name, oldPrice, newPrice, label, labelColor, isFavorite, isCompared, isInCart, onToggleFavorite, onToggleCompare, onAddToCart }) => {
-  const displayImage = imageUrl && imageUrl.trim() !== '' ? imageUrl : '/кот.png';
+  const displayImage = imageUrl && imageUrl.trim() !== '' ? imageUrl : '/соц-соти/кот.png';
+  
   return (
     <div className="group bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:border-blue-300">
       <div className="relative p-4">
-        <Image src={displayImage} alt={name} width={300} height={300} className="w-full h-60 object-contain transition-transform duration-300 group-hover:scale-105" />
+        <Image 
+          src={displayImage} 
+          alt={name} 
+          width={300} 
+          height={300} 
+          className="w-full h-60 object-contain transition-transform duration-300 group-hover:scale-105"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = '/соц-соти/кот.png';
+          }}
+        />
         <div className="absolute top-3 right-3 flex flex-col gap-2 transition-opacity duration-300">
           <button
             className={`bg-white p-2 rounded-full shadow transition-colors ${isFavorite ? 'text-red-500' : 'text-gray-500 hover:text-red-500'}`}

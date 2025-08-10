@@ -14,6 +14,7 @@ function App() {
       <Route path="/signin" element={<SignUp />} />
       <Route path="/send-product" element={<SendProductPage />} />
       <Route path="/products" element={<Products />} />
+    
     </Routes>
   );
 }

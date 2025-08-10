@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { ProductProvider } from '@/components/ProductContext';
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata: Metadata = {
   title: "SPORTOVA for Muhammadali",
@@ -43,12 +44,14 @@ export default function RootLayout({
         className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}
       >
         <ProductProvider>
-          <div>
-            <SportovaNavbar />
-          </div>
-          {children}
-          <NewsletterSection />
-          <Footer />
+          <AuthProvider>
+            <div>
+              <SportovaNavbar />
+            </div>
+            {children}
+            <NewsletterSection />
+            <Footer />
+          </AuthProvider>
         </ProductProvider>
       </body>
     </html>

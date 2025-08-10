@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import HeroSection from "@/components/HeroSection";
 import ProductCarousel from "@/components/ProductCarousel";
 import CatalogSection from "@/components/CatalogSection";
@@ -49,6 +50,31 @@ export default function Page() {
 
   return (
     <main>
+      {/* Hero Section с кнопкой Продукты */}
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={sectionVariants}
+        className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            Добро пожаловать в SPORTOVA
+          </h1>
+          <p className="text-xl md:text-2xl mb-8 text-blue-100">
+            Ваш надежный партнер в мире спортивного оборудования
+          </p>
+          <Link
+            href="/products"
+            className="inline-flex items-center px-8 py-4 bg-white text-blue-600 font-bold text-lg rounded-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg"
+          >
+            <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            Перейти к продуктам
+          </Link>
+        </div>
+      </motion.div>
       <motion.div
         initial="hidden"
         whileInView="visible"
