@@ -1,158 +1,143 @@
-'use client';
+'use client'
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext } from 'react'
+import { useEffect, useState, ReactNode } from 'react'
+import {
+  User,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendPasswordResetEmail,
+  updateProfile,
+  sendEmailVerification,
+} from 'firebase/auth'
+import { auth } from '../../lib/firebase'
 
-interface User {
-  id: number;
-  username: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  profile: {
-    phone: string;
-    address: string;
-    avatar: string;
-    created_at: string;
-    updated_at: string;
-  };
+
+type AuthContextType = {
+  sendVerificationEmail: () => Promise<void>
 }
 
-interface AuthContextType {
-  user: User | null;
-  loading: boolean;
-  login: (username: string, password: string) => Promise<{ success: boolean; message: string }>;
-  register: (userData: RegisterData) => Promise<{ success: boolean; message: string }>;
-  logout: () => Promise<void>;
-  checkAuth: () => Promise<void>;
+
+export type { Type };
+export const AuthContext = createContext<Type | undefined>(undefined);
+
+
+interface Type {
+  user: User | null
+  loading: boolean
+  signIn: (email: string, password: string) => Promise<void>
+  signUp: (email: string, password: string, displayName?: string) => Promise<void>
+  logout: () => Promise<void>
+  signInWithGoogle: () => Promise<void>
+  resetPassword: (email: string) => Promise<void>
+  updateUserProfile: (displayName: string, photoURL?: string) => Promise<void>
+  sendVerificationEmail: () => Promise<void>
 }
-
-interface RegisterData {
-  username: string;
-  email: string;
-  password: string;
-  password_confirm: string;
-  first_name: string;
-  last_name: string;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
 
 interface AuthProviderProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
+export function AuthProvider({ children }: AuthProviderProps) {
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const checkAuth = async () => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user)
+      setLoading(false)
+    })
+    return unsubscribe
+  }, [])
+
+  const signIn = async (email: string, password: string) => {
+    setLoading(true)
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/auth/profile/', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      if (response.ok) {
-        const userData = await response.json();
-        setUser(userData);
-      } else {
-        setUser(null);
-      }
-    } catch (error) {
-      console.error('Ошибка проверки аутентификации:', error);
-      setUser(null);
-    }
-  };
-
-  const login = async (username: string, password: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch('http://127.0.0.1:8000/api/auth/login/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setUser(data.user);
-        return { success: true, message: data.message };
-      } else {
-        return { success: false, message: data.error || 'Ошибка входа' };
-      }
-    } catch (error) {
-      console.error('Ошибка входа:', error);
-      return { success: false, message: 'Ошибка сети' };
+      await signInWithEmailAndPassword(auth, email, password)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
-  const register = async (userData: RegisterData) => {
-    setLoading(true);
+  const signUp = async (email: string, password: string, displayName?: string) => {
+    setLoading(true)
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/auth/register/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setUser(data.user);
-        return { success: true, message: data.message };
-      } else {
-        return { success: false, message: data.error || 'Ошибка регистрации' };
+      const { user } = await createUserWithEmailAndPassword(auth, email, password)
+      if (displayName) {
+        await updateProfile(user, { displayName })
       }
-    } catch (error) {
-      console.error('Ошибка регистрации:', error);
-      return { success: false, message: 'Ошибка сети' };
+      await sendEmailVerification(user)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const logout = async () => {
+    setLoading(true)
     try {
-      await fetch('http://127.0.0.1:8000/api/auth/logout/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      setUser(null);
-    } catch (error) {
-      console.error('Ошибка выхода:', error);
+      await signOut(auth)
+    } finally {
+      setLoading(false)
     }
-  };
+  }
 
-  const value: AuthContextType = {
+  const signInWithGoogle = async () => {
+    setLoading(true)
+    try {
+      const provider = new GoogleAuthProvider()
+      await signInWithPopup(auth, provider)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const resetPassword = async (email: string) => {
+    await sendPasswordResetEmail(auth, email)
+  }
+
+ const updateUserProfile = async (
+  displayName: string,
+  photoURL?: string | null
+) => {
+  if (user) {
+    try {
+      await updateProfile(user, {
+        displayName,
+        photoURL: photoURL ?? null, // здесь важно!
+      })
+
+      setUser({
+        ...user,
+        displayName,
+        photoURL: photoURL ?? null,
+      })
+    } catch (error) {
+      console.error("Ошибка при обновлении профиля:", error)
+    }
+  }
+}
+
+  const sendVerificationEmail = async () => {
+    if (user) {
+      await sendEmailVerification(user)
+    }
+  }
+
+  const value: Type = {
     user,
     loading,
-    login,
-    register,
+    signIn,
+    signUp,
     logout,
-    checkAuth,
-  };
+    signInWithGoogle,
+    resetPassword,
+    updateUserProfile,
+    sendVerificationEmail,
+  }
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+} 
