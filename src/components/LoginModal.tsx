@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { X, Eye, EyeOff } from 'lucide-react';
 
-interface LoginModalProps {
+interface LoginModal {
   isOpen: boolean;
   onClose: () => void;
   onSwitchToRegister: () => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onSwitchToRegister }) => {
+const LoginModal: React.FC<LoginModal> = ({ isOpen, onClose, onSwitchToRegister }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);

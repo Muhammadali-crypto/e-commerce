@@ -127,10 +127,14 @@ const SportovaNavbar = () => {
                 </Link>
                 <div className="flex items-center space-x-3">
                   <button className="px-3 py-1.5 rounded text-blue-600 font-medium text-sm shadow-sm hover:bg-blue-50 transition-all duration-300 border border-transparent hover:border-blue-200">
+                    <Link href="/register">
                     Создать аккаунт
+                    </Link>
                   </button>
                   <button className="px-3 py-1.5 rounded bg-orange-500 text-white font-medium text-sm shadow-sm hover:bg-orange-600 transition-all duration-300">
+                    <Link href="/login">
                     Войти
+                    </Link>
                   </button>
                 </div>
               </div>
