@@ -1,9 +1,10 @@
-'use client'
+'use client';
+'use client';
 
-import { createContext } from 'react'
-import { useEffect, useState, ReactNode } from 'react'
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import type { User } from 'firebase/auth';
+import { useContext } from "react";
 import {
-  User,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -13,17 +14,24 @@ import {
   sendPasswordResetEmail,
   updateProfile,
   sendEmailVerification,
-} from 'firebase/auth'
-import { auth } from '../../lib/firebase'
+} from 'firebase/auth';
+import { auth } from '../../lib/firebase';
 
 
-type AuthContextType = {
-  sendVerificationEmail: () => Promise<void>
-}
 
 
+ 
 export type { Type };
 export const AuthContext = createContext<Type | undefined>(undefined);
+
+// Хук для удобного доступа к контексту
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+}
 
 
 interface Type {
@@ -138,6 +146,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     updateUserProfile,
     sendVerificationEmail,
   }
+  
+  
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 } 

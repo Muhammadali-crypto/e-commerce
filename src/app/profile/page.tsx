@@ -5,10 +5,33 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
+// Тип профиля
+interface UserProfile {
+  avatar?: string;
+  phone?: string;
+  address?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Тип юзера
+interface User {
+  id: string | number;
+  first_name?: string;
+  last_name?: string;
+  username?: string;
+  email?: string;
+  profile?: UserProfile;
+}
+
 export default function ProfilePage() {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth() as { 
+    user: User | null; 
+    logout: () => Promise<void>;
+  };
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [avatarSrc, setAvatarSrc] = useState(user?.profile?.avatar || '/соц-соти/кот.png');
 
   useEffect(() => {
     if (!user) {
@@ -52,20 +75,17 @@ export default function ProfilePage() {
 
           {/* Основная информация */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Левая колонка - Аватар и основная информация */}
+            {/* Левая колонка */}
             <div className="space-y-6">
               {/* Аватар */}
               <div className="text-center">
                 <div className="relative w-32 h-32 mx-auto mb-4">
                   <Image
-                    src={user.profile?.avatar || '/соц-соти/кот.png'}
+                    src={avatarSrc}
                     alt="Аватар"
                     fill
                     className="rounded-full object-cover border-4 border-gray-200"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = '/соц-соти/кот.png';
-                    }}
+                    onError={() => setAvatarSrc('/соц-соти/кот.png')}
                   />
                 </div>
                 <h2 className="text-2xl font-semibold text-gray-900">
@@ -100,9 +120,9 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            {/* Правая колонка - Дополнительная информация */}
+            {/* Правая колонка */}
             <div className="space-y-6">
-              {/* Контактная информация */}
+              {/* Контакты */}
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-gray-900 mb-2">Контактная информация</h3>
                 <div className="space-y-2 text-sm">
@@ -117,26 +137,24 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              {/* Информация об аккаунте */}
+              {/* Аккаунт */}
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-gray-900 mb-2">Информация об аккаунте</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Дата регистрации:</span>
                     <span className="font-medium">
-                      {user.profile?.created_at 
+                      {user.profile?.created_at
                         ? new Date(user.profile.created_at).toLocaleDateString('ru-RU')
-                        : 'Не указана'
-                      }
+                        : 'Не указана'}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Последнее обновление:</span>
                     <span className="font-medium">
-                      {user.profile?.updated_at 
+                      {user.profile?.updated_at
                         ? new Date(user.profile.updated_at).toLocaleDateString('ru-RU')
-                        : 'Не указана'
-                      }
+                        : 'Не указана'}
                     </span>
                   </div>
                 </div>
@@ -160,4 +178,4 @@ export default function ProfilePage() {
       </div>
     </div>
   );
-} 
+}

@@ -10,6 +10,8 @@ interface LoginModal {
   onSwitchToRegister: () => void;
 }
 
+
+
 const LoginModal: React.FC<LoginModal> = ({ isOpen, onClose, onSwitchToRegister }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
