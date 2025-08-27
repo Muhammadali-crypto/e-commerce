@@ -5,10 +5,20 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { ChevronDown, Settings, LogOut, User } from 'lucide-react';
 
+interface UserType {
+  first_name?: string;
+  username: string;
+}
+
 const UserProfile: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth() as { 
+    user: UserType | null; 
+    logout: () => Promise<void>;
+    loading?: boolean;
+  };
+  
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,6 +35,7 @@ const UserProfile: React.FC = () => {
   const handleLogout = async () => {
     await logout();
     setIsOpen(false);
+    router.push('/'); // после выхода отправим на главную
   };
 
   const handleProfileClick = () => {
@@ -32,8 +43,24 @@ const UserProfile: React.FC = () => {
     setIsOpen(false);
   };
 
-  if (!user) return null;
+  // Пока идёт загрузка
+  if (loading) {
+    return <div className="text-gray-500 text-sm">Загрузка...</div>;
+  }
 
+  // Если юзера нет — показываем кнопку "Войти"
+  if (!user) {
+    return (
+      <button
+        onClick={() => router.push('/login')}
+        className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+      >
+        Войти
+      </button>
+    );
+  }
+
+  // Если юзер есть — дропдаун
   return (
     <div className="relative" ref={dropdownRef}>
       <button
@@ -83,5 +110,5 @@ const UserProfile: React.FC = () => {
     </div>
   );
 };
-
-export default UserProfile; 
+  
+export default UserProfile;

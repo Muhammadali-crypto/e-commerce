@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { ChevronDown, Search, Heart, BarChart3, ShoppingCart, MapPin, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import { useProductContext } from './ProductContext';
+import { useAuth } from "@/contexts/AuthContext";
+
 
 const SportovaNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,6 +15,8 @@ const SportovaNavbar = () => {
   const [isDiscountOpen, setIsDiscountOpen] = useState(false);
   
   const { favorites, compare, cart } = useProductContext();
+  const { user, logout } = useAuth();
+
 
   // Товары со скидкой
   const discountProducts = [
@@ -125,18 +129,22 @@ const SportovaNavbar = () => {
                 <Link href="/products" className="px-4 py-2 rounded bg-blue-600 text-white font-medium shadow-sm hover:bg-blue-700 transition-all duration-300">
                   Продукты
                 </Link>
-                <div className="flex items-center space-x-3">
-                  <button className="px-3 py-1.5 rounded text-blue-600 font-medium text-sm shadow-sm hover:bg-blue-50 transition-all duration-300 border border-transparent hover:border-blue-200">
-                    <Link href="/register">
-                    Создать аккаунт
-                    </Link>
-                  </button>
-                  <button className="px-3 py-1.5 rounded bg-orange-500 text-white font-medium text-sm shadow-sm hover:bg-orange-600 transition-all duration-300">
-                    <Link href="/login">
-                    Войти
-                    </Link>
-                  </button>
-                </div>
+                  {!user ? (
+                    <>
+                      <a href="/login" className="text-gray-700 hover:text-blue-600">Войти</a>
+                      <a href="/register" className="ml-4 text-gray-700 hover:text-blue-600">Зарегистрироваться</a>
+                    </>
+                  ) : (
+                    <>
+                      <a href="/profile" className="text-gray-700 hover:text-blue-600">Профиль</a>
+                      <button
+                        onClick={logout}
+                        className="ml-4 text-gray-700 hover:text-blue-600"
+                      >
+                        Выйти
+                      </button>
+                    </>
+                  )}
               </div>
             </div>
           </div>
