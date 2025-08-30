@@ -1,0 +1,28 @@
+{
+  "name": "testing-platform",
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "regions": ["fra1"],
+  "functions": {
+    "src/app/api/**/*.{js,jsx,ts,tsx}": {
+      "maxDuration": 30,
+      "memory": 1024
+    }
+  },
+  "env": {
+    "NODE_ENV": {
+      "value": "production"
+    },
+    "NEXT_PUBLIC_VERCEL_URL": {
+      "value": "@vercel-url"
+    }
+  },
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    }
+  }
+}

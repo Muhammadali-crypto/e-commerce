@@ -1,6 +1,5 @@
-import { SpeedInsights } from "@vercel/speed-insights/next";
-
-export default function SendProductPage() {
+// Backup of SendProductPage.js before force overwrite
+export default function SendProducts() {
   return (
     <div className="p-10">
       <h1 className="text-2xl font-bold">Send Product Page</h1>
