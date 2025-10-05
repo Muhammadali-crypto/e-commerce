@@ -1,9 +1,5 @@
-import { SpeedInsights } from "@vercel/speed-insights/next";
+// This page is now handled by the new app directory. Keeping this file empty to avoid build conflicts.
 
 export default function SendProductPage() {
-  return (
-    <div className="p-10">
-      <h1 className="text-2xl font-bold">Send Product Page</h1>
-    </div>
-  );
+  return null;
 }
