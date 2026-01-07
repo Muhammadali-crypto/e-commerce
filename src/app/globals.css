@@ -1,10 +1,231 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@media (max-width: 768px){
+
+/* Исправление чат-виджета Crisp на мобильных - УСИЛЕННАЯ ВЕРСИЯ */
+
+/* Для всех мобильных устройств */
+@media (max-width: 768px) {
+  
+  /* Основной контейнер Crisp */
+  #crisp-chatbox,
+  .crisp-client,
+  [data-crisp-chatbox],
+  div[class*="crisp"] {
+    max-height: 50vh !important;
+    max-width: calc(100vw - 20px) !important;
+    bottom: 80px !important;
+    right: 10px !important;
+    left: 10px !important;
+    z-index: 9999 !important;
+  }
+  
+  /* Когда чат открыт */
+  #crisp-chatbox[data-is-opened="true"],
+  .crisp-client[data-full-view="true"] {
+    max-height: 55vh !important;
+    bottom: 20px !important;
+  }
+  
+  /* Кнопка чата (свёрнутое состояние) */
+  .crisp-client .cc-kv6t,
+  .crisp-client .cc-1xry,
+  .crisp-client .cc-unoo,
+  a[class*="crisp"] {
+    bottom: 85px !important;
+    right: 20px !important;
+    width: 60px !important;
+    height: 60px !important;
+  }
+  
+  /* Добавляем отступ для контента страницы */
   body {
-  background-color: #f5f5f0; /* Бежевый цвет - более светлый */
-  min-height: 100vh;
-}
+    padding-bottom: 120px !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Для основного контента */
+  main,
+  .container,
+  #root,
+  #app,
+  .content {
+    padding-bottom: 120px !important;
+  }
+  
+  /* Убираем оверлей/затемнение если есть */
+  .crisp-client[data-full-view="true"]::before {
+    display: none !important;
+  }
 }
 
+/* Для маленьких экранов */
+@media (max-width: 480px) {
+  
+  #crisp-chatbox,
+  .crisp-client {
+    max-height: 45vh !important;
+    bottom: 70px !important;
+  }
+  
+  /* Уменьшаем кнопку чата */
+  .crisp-client .cc-kv6t,
+  .crisp-client .cc-1xry {
+    width: 55px !important;
+    height: 55px !important;
+    bottom: 75px !important;
+  }
+  
+  body {
+    padding-bottom: 100px !important;
+  }
+}
+
+/* Дополнительно: скрыть чат при загрузке страницы (опционально) */
+/*
+#crisp-chatbox {
+  display: none !important;
+}
+
+#crisp-chatbox[data-is-opened="true"] {
+  display: block !important;
+}
+*/
+
+
+/* Оптимизация навбара для мобильных устройств */
+
+@media (max-width: 768px) {
+  
+  /* Основной навбар - уменьшаем высоту */
+  nav,
+  .navbar,
+  header {
+    padding: 8px 10px !important;
+    min-height: auto !important;
+  }
+  
+  /* Верхняя часть (Самарканд, Заказать звонок, Продукты, Войти) */
+  .navbar-top,
+  nav > div:first-child {
+    font-size: 11px !important;
+    padding: 5px 0 !important;
+    gap: 8px !important;
+  }
+  
+  /* Логотип SPORTOVA - уменьшаем */
+  .logo,
+  .navbar-brand,
+  nav img,
+  [class*="logo"] {
+    max-height: 35px !important;
+    width: auto !important;
+    margin: 0 !important;
+  }
+  
+  /* Иконки (избранное, статистика, корзина) */
+  .navbar-icons,
+  nav svg,
+  nav .icon,
+  [class*="icon"] {
+    width: 20px !important;
+    height: 20px !important;
+    margin: 0 5px !important;
+  }
+  
+  /* Текст корзины (Корзина (0) Нет товаров) */
+  .cart-text,
+  [class*="cart"] span,
+  [class*="basket"] span {
+    font-size: 10px !important;
+    display: none !important; /* Скрываем текст, оставляем только иконку */
+  }
+  
+  /* Показываем только счётчик товаров */
+  .cart-count,
+  [class*="cart"] .count,
+  [class*="badge"] {
+    display: inline-block !important;
+    font-size: 10px !important;
+  }
+  
+  /* Синяя полоса с категориями (Каталог товаров, Шведские стенки, Уличные комплексы) */
+  .categories-bar,
+  .navbar-categories,
+  nav > div[style*="background"] {
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    gap: 10px !important;
+  }
+  
+  /* Убираем гамбургер меню если есть лишние элементы */
+  .navbar-toggler {
+    padding: 5px !important;
+    border: none !important;
+  }
+  
+  /* Кнопки в навбаре */
+  nav button,
+  .navbar button {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+  }
+  
+  /* Оранжевая кнопка "Товары со скидкой" */
+  .discount-button,
+  button[style*="background"],
+  [class*="discount"] {
+    padding: 8px 12px !important;
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  
+  /* Для очень маленьких экранов */
+  .navbar-top,
+  nav > div:first-child {
+    font-size: 10px !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+  }
+  
+  /* Логотип ещё меньше */
+  .logo,
+  .navbar-brand {
+    max-height: 30px !important;
+  }
+  
+  /* Категории в одну строку со скроллом */
+  .categories-bar,
+  .navbar-categories {
+    font-size: 11px !important;
+    gap: 8px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* Скрываем менее важные элементы */
+  .navbar-top span:not(:first-child):not(:last-child) {
+    display: none !important;
+  }
+}
+
+/* Фиксированный навбар (если используется) */
+nav.fixed,
+.navbar-fixed,
+header.fixed {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1000 !important;
+}
+
+/* Отступ для контента под фиксированным навбаром */
+body.has-fixed-navbar,
+body {
+  padding-top: 0 !important; /* Будет добавлено автоматически если навбар fixed */
+}
